@@ -4,21 +4,32 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  FlatList,
+  List,
   View
 } from 'react-native';
 
 export default class Body extends Component {
+  _keyExtractor = (item, index) =>this.props.times[item][index];
   render() {
     return (
+
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {this.props.value}
-        </Text >
-        <View style={styles.times}>
+        <Text style={styles.stationName}>{this.props.stationName ? this.props.stationName.toUpperCase() : ''}</Text>
+        <FlatList 
+          data={this.props.times ? this.props.times : null} 
+          renderItem={({item}) => (
+            <View>
+              <Text style={{color:'#FF0033', fontWeight:'bold', fontSize:20}}>{item[0]}</Text>
+              <Text style={{color:'#FF0033'}}>{item[1]}, {item[2]}, {item[3]}</Text>
+            </View>
+            )
+          }/>
+        {/*<View style={styles.times}>
         <Text style={styles.timesText}>
-          {this.props.times}
+          {this.props.times ? this.props.times.map((e,i)=> <Text key={i}>{e[0]}</Text>) : 'nothing'}
           </Text>
-        </View>
+        </View>*/}
       </View>
     );
   }
@@ -46,7 +57,11 @@ const styles = StyleSheet.create({
     color:'#fff',
   },
   times:{
-    width:100,
-  }
+    width:200,
+  },
+  stationName:{
+    color:'#FF0033', 
+    fontWeight:'bold', 
+    fontSize:20},
 });
 

@@ -38,12 +38,12 @@ export default class Dropdown extends Component {
             this.closeModal();
             }
             }>
-            Select</Text>
+            Done</Text>
         </View>
-        <Picker itemStyle={styles.picker} style={styles.picker2} onValueChange={(value)=>this.updateStation(value)}>
+        <Picker selectedValue={this.props.currentStation} itemStyle={styles.picker} style={styles.picker2} onValueChange={(value)=>this.updateStation(value)}>
             {/*selectedValue={this.state.language}
             onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>*/}
-            {this.props.allStations.map((e,i)=>{return <Picker.Item label={e.name} value={e.abbr} />})}
+            {this.props.allStations.map((e,i)=>{return <Picker.Item key={i} label={e.name} value={e.abbr} />})}
         </Picker>
       </View>
     );
@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
     width:350,
     height:30,
     fontSize:20,
+    fontWeight:'bold',
+    paddingTop:5,
     color:'#add8e6',
   },
   selectView:{

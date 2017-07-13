@@ -6,6 +6,7 @@ import {
   Text,
   View,
   PickerIOS,
+  Picker,
   Button,
   Animated,
   Dimensions
@@ -23,6 +24,7 @@ export default class App extends Component {
        loading:false,
        allStations:null,
        currentStation:'none',
+       stationName:'null',
        trainTimes:null,
        modal:false,
       
@@ -41,23 +43,11 @@ export default class App extends Component {
                 loading:false,
                 allStations:data.root.stations.station,             
             });
-            console.log(this.state);
             })
   }
 
   selectStation(station){
     this.setState({currentStation:station});
-    const url = 'https://api.bart.gov/api/etd.aspx?cmd=etd&orig=' + station + '&key=MW9S-E7SL-26DU-VV8V&json=y';
-      fetch(url)
-        .then(response => response.json())
-        .then( (json) => json.root)
-        .then(allTrains => {
-            this.setState({trainTimes:allTrains.station[0].etd.map((e,i)=> [e.destination, e.estimate[0] ? e.estimate[0].minutes + ' min' : 'nothing', e.estimate[1] ? e.estimate[1].minutes + ' min' : 'nothing', e.estimate[2] ? e.estimate[2].minutes + ' min' : 'nothing']), stationName:allTrains.station[0].name});
-      });
-  }
-
-  getTrains(station){
-    // this.setState({currentStation:station});
     const url = 'https://api.bart.gov/api/etd.aspx?cmd=etd&orig=' + station + '&key=MW9S-E7SL-26DU-VV8V&json=y';
       fetch(url)
         .then(response => response.json())
@@ -76,8 +66,8 @@ export default class App extends Component {
         <View style={styles.select}>
           <Text style={styles.text} title='Select Station' onPress={()=>this.setState({modal:true})}>Select Station</Text>
         </View>
-        <Body value={this.state.currentStation} times={this.state.trainTimes} test='this is a test'/>
-        {this.state.modal ? <Dropdown allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : <Text>false</Text>}
+        <Body value={this.state.currentStation} times={this.state.trainTimes} stationName={this.state.stationName} test='this is a test'/>
+        {this.state.modal ? <Dropdown currentStation = {this.state.currentStation} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : <Text>false</Text>}
       </View>
     );
   }
