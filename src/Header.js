@@ -22,9 +22,12 @@ export default class Header extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#222',
+    // borderColor:'green',
+    // borderWidth:3,
   },
   welcome: {
     fontSize: 40,

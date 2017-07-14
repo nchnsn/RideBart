@@ -24,7 +24,8 @@ export default class Body extends Component {
               <Text style={{color:'#FF0033'}}>{item[1]}, {item[2]}, {item[3]}</Text>
             </View>
             )
-          }/>
+          }
+        />
         {/*<View style={styles.times}>
         <Text style={styles.timesText}>
           {this.props.times ? this.props.times.map((e,i)=> <Text key={i}>{e[0]}</Text>) : 'nothing'}
@@ -37,10 +38,13 @@ export default class Body extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 5,
+    // flexDirection:'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#222',
+    // borderColor:'blue',
+    // borderWidth:3,
   },
   welcome: {
     fontSize: 20,

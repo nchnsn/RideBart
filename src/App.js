@@ -61,13 +61,17 @@ export default class App extends Component {
     console.log(this.state.allStations);
     return (
       <View style={styles.container}>
-        <Header title={this.state.title}/>
+        <View style={styles.header}>
+          <Header title={this.state.title}/>
+        </View>
+        <View>
         {this.state.loading ? <Text style={{color:'#fff'}}>Loading...</Text> : <Text style={{color:'#fff'}}>Loaded!</Text>}
+        </View>
         <View style={styles.select}>
           <Text style={styles.text} title='Select Station' onPress={()=>this.setState({modal:true})}>Select Station</Text>
         </View>
         <Body value={this.state.currentStation} times={this.state.trainTimes} stationName={this.state.stationName} test='this is a test'/>
-        {this.state.modal ? <Dropdown currentStation = {this.state.currentStation} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : <Text>false</Text>}
+        {this.state.modal ? <Dropdown currentStation = {this.state.currentStation} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : null}
       </View>
     );
   }
@@ -102,7 +106,17 @@ const styles = StyleSheet.create({
   text:{
     color:'#fff',
     textAlign:'center',
-    
+  },
+  header:{
+    flex:1,
+    flexDirection:'row',
+  },
+  body:{
+    flex:3,
+    borderWidth:3,
+    borderColor:'blue',
   }
+
+
 });
 

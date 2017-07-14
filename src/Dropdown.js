@@ -29,7 +29,7 @@ export default class Dropdown extends Component {
   render() {
     console.log('rendering');
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.selectView}>
           <Text style={styles.select} title='select' 
           onPress={
@@ -52,10 +52,11 @@ export default class Dropdown extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    position:'absolute',
+    bottom:0,
   },
   welcome: {
     fontSize: 20,
