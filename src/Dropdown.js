@@ -22,6 +22,7 @@ export default class Dropdown extends Component {
 
     updateStation(station){
     console.log('udpate station');
+    this.props.goHome();
     this.props.updateStation(station);
     
     

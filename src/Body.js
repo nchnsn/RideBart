@@ -6,24 +6,82 @@ import {
   Text,
   FlatList,
   List,
-  View
+  View,
+  Animated,
+  Easing
+
 } from 'react-native';
 
 export default class Body extends Component {
-  _keyExtractor = (item, index) =>this.props.times[item][index];
+  constructor(props){
+    super(props);
+    this.animatedValue = new Animated.Value(0);
+    this.state = {
+      currentTrain:'hey',
+    }
+  }
+
+
+
+  _keyExtractor = (item, index) => this.props.times[item][index];
+
+  componentDidMount () {
+    this.animate()
+  }
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear
+      }
+    ).start(() => this.animate())
+  }
+  checkTrainArriving(element){
+    if(element[1] === 'Leaving min' || element[1] === '1 min'){
+      this.setState({currentTrain:element[0]});
+    }
+  }
+
+
   render() {
+  const marginLeft = this.animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 300]
+  })
+  const opacity = this.animatedValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 1, 0]
+  })
+  const movingMargin = this.animatedValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 300, 0]
+  })
+  const textSize = this.animatedValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [18, 32, 18]
+  })
+  const rotateX = this.animatedValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['0deg', '180deg', '0deg']
+  })
     return (
 
       <View style={styles.container}>
-        <Text style={styles.stationName}>{this.props.stationName ? this.props.stationName.toUpperCase() : ''}</Text>
+        {/*<Text style={styles.stationName}>{this.props.stationName ? this.props.stationName.toUpperCase() : ''}</Text>*/}
+        <Animated.View style={{opacity}}>
+        <Text style={styles.arrivingTrain}>{this.props.train ? this.props.train : ' '} </Text>
+        </Animated.View>
         <FlatList 
           data={this.props.times ? this.props.times : null} 
-          renderItem={({item}) => (
-            <View>
+          renderItem={({item}) => {
+            return (<View>
               <Text style={{color:'#FF0033', fontWeight:'bold', fontSize:20}}>{item[0]}</Text>
               <Text style={{color:'#FF0033'}}>{item[1]}, {item[2]}, {item[3]}</Text>
-            </View>
-            )
+            </View>)
+          }
           }
         />
         {/*<View style={styles.times}>
@@ -66,6 +124,13 @@ const styles = StyleSheet.create({
   stationName:{
     color:'#FF0033', 
     fontWeight:'bold', 
-    fontSize:20},
+    fontSize:20
+  },
+  arrivingTrain:{
+    color:'#FF0033', 
+    fontSize:40,
+    fontWeight:'bold', 
+
+  }
 });
 

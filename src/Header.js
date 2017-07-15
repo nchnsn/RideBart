@@ -4,15 +4,22 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  TouchableHighlight
 } from 'react-native';
 
 export default class Header extends Component {
   render() {
     return (
       <View style={styles.container}>
+        { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
+          <Image source={require('./../img/back.png')} />
+         </TouchableHighlight> : <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
+          <Image source={require('./../img/menu.png')} />
+         </TouchableHighlight>}
         <Text style={styles.welcome}>
-          <Text>ride</Text><Text style={styles.welcomeBart}>bart</Text>
+          <Text>{this.props.title}</Text>
         </Text>
       </View>
     );
@@ -30,7 +37,7 @@ const styles = StyleSheet.create({
     // borderWidth:3,
   },
   welcome: {
-    fontSize: 40,
+    fontSize: 20,
     textAlign: 'center',
     margin: 10,
     color:'#fff',
@@ -44,5 +51,10 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  backButton:{
+    position:'absolute',
+    top:40,
+    left:15,
+  }
 });
 
