@@ -32,7 +32,6 @@ export default class App extends Component {
        showSelect:true,
        showBody:false,
        test:null,
-      
       }
   }
 
@@ -52,7 +51,8 @@ export default class App extends Component {
   }
 
   homeScreen(){
-    this.setState({showBack:false, showSelect:true, showBody:false});
+    this.setState({showBack:false});
+    this.setState({showSelect:true, showBody:false, stationName:'ridebart' });
   }
   
   selectScreen(){
@@ -68,7 +68,7 @@ export default class App extends Component {
         .then(allTrains => {
             this.setState({trainTimes:allTrains.station[0].etd.map((e,i)=> {
               if(e.estimate[0].minutes === 'Leaving' || e.estimate[0].minutes === '1'){
-                this.setState({currentTrain:e.destination.toUpperCase()});
+                this.setState({currentTrain:[e.destination.toUpperCase(), e.estimate[0].length ]});
               } else {
                 // this.setState({currentTrain:e.estimate[0].minutes});
               }
@@ -98,7 +98,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Header title={this.state.stationName} back={()=>this.backButton()} showBack={this.state.showBack}/>
+          <Header title={this.state.stationName} back={()=>this.homeScreen()} showBack={this.state.showBack}/>
         </View>
         <Text>{this.state.test}</Text>
         {this.state.showSelect ? <Select loading={this.state.loading} hide={this.state.showSelect} showModal={()=>this.setState({modal:true})} /> : null}
@@ -109,7 +109,7 @@ export default class App extends Component {
           {this.state.showSelect ? <Text style={styles.text} title='Select Station' onPress={()=>this.setState({modal:true})}>Select Station</Text> : null}
         </View>*/}
         {/*<Menu style={{width: 250, height: 50, backgroundColor: 'powderblue'}}/>*/}
-        {this.state.showBody ? <Body value={this.state.currentStation} times={this.state.trainTimes} train={this.state.currentTrain} stationName={this.state.stationName} test='this is a test'/> : null}
+        {this.state.showBody ? <Body value={this.state.currentStation} times={this.state.trainTimes} train={this.state.currentTrain} stationName={this.state.stationName} back={this.state.showBack} test='this is a test'/> : null}
         {this.state.modal ? <Dropdown currentStation = {this.state.currentStation} goHome={()=>this.selectScreen()} hideSelect={()=>this.setState({showSelect:false})} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : null}
       </View>
     );

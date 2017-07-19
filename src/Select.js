@@ -5,22 +5,39 @@ import {
   StyleSheet,
   Text,
   View,
+  Animated,
+  Easing,
 
 } from 'react-native';
 
 export default class Select extends Component {
+  constructor(props){
+    super(props);
+    this.animation1 = new Animated.Value(-300);
+  }
+  componentWillMount(){
+    Animated.timing (
+      this.animation1,
+      {
+        toValue: 0,                
+        duration: 200, 
+      }
+    ).start();
+  }
+
   render(){
     return(
       <View style={styles.container}>
+        <Animated.View style={{marginLeft:this.animation1}}>
         <View style={styles.selectWrapper}>
-          <View style={styles.select}>
+          <Animated.View style={styles.select}>
             <Text style={styles.selectText} title='Select Station' onPress={this.props.showModal}>Select Station</Text>
-          </View>
+          </Animated.View>
         </View>        
         <View style={styles.loading}>
           {this.props.loading ? <Text style={{color:'#fff'}}>Loading...</Text> : <Text style={{color:'#fff'}}>Loaded!</Text>}
         </View>
-
+        </Animated.View>
       </View>
     );
   }

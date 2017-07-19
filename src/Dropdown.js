@@ -7,15 +7,40 @@ import {
   ListView,
   Picker,
   View,
-  Button
+  Button,
+  Dimensions,
+  Animated,
+  Easing
 } from 'react-native';
 
+const width = Dimensions.get('window').width; //full width
+const height = Dimensions.get('window').height;
 export default class Dropdown extends Component {
+  constructor(props){
+    super(props);
+    this.closeAnimation = new Animated.Value(height);
+    this.openAnimation = new Animated.Value(200);
+  }
+
+  componentWillMount(){
+    Animated.timing(this.closeAnimation,{
+      toValue:0,
+      duration:300,
+      easing:Easing.ease.in,
+    }).start();
+  }
 
 
   closeModal(){
-    console.log(this.props.closeModal);
-    this.props.closeModal();
+    this.closeAnimation.setValue(0);
+    Animated.timing(this.closeAnimation,{
+      toValue:height,
+      duration:300,
+      easing:Easing.ease.out,
+    }).start(this.props.closeModal);
+    // console.log(this.props.closeModal);
+
+    
     
     
   }
@@ -30,34 +55,30 @@ export default class Dropdown extends Component {
   render() {
     console.log('rendering');
     return (
-      <View style={styles.container}>
+      <Animated.View style={{ transform: [{translateY: this.closeAnimation}], position:'absolute',  bottom:0, left:0, width:width, backgroundColor:'#333', opacity:.8 }}>
         <View style={styles.selectView}>
           <Text style={styles.select} title='select' 
-          onPress={
-            ()=>{
-            console.log('pressing button');
-            this.closeModal();
-            }
-            }>
+          onPress={()=>this.closeModal()}>
             Done</Text>
         </View>
-        <Picker selectedValue={this.props.currentStation} itemStyle={styles.picker} style={styles.picker2} onValueChange={(value)=>this.updateStation(value)}>
+        <Picker selectedValue={this.props.currentStation} itemStyle={styles.picker} onValueChange={(value)=>this.updateStation(value)}>
             {/*selectedValue={this.state.language}
             onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>*/}
-            {this.props.allStations.map((e,i)=>{return <Picker.Item key={i} label={e.name} value={e.abbr} />})}
+            {this.props.allStations ? this.props.allStations.map((e,i)=>{return <Picker.Item key={i} label={e.name} value={e.abbr} />}) : <Picker.Item key={1} label='Try again dude' value='Try again' /> }
         </Picker>
-      </View>
+      </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     position:'absolute',
     bottom:0,
+    left:0,
+    width:width,
+    backgroundColor:'#333',
+    opacity:.8,
   },
   welcome: {
     fontSize: 20,
@@ -71,24 +92,25 @@ const styles = StyleSheet.create({
   },
   select:{
     textAlign:'right',
-    width:350,
     height:30,
     fontSize:20,
     fontWeight:'bold',
-    paddingTop:5,
+    padding:5,
     color:'#add8e6',
   },
   selectView:{
-    width:375,
-    height:40,
+    // width:375,
+    // height:40,
     borderTopWidth:1,
     borderBottomWidth:1,
     borderColor:'#fff',
+    
   },
   picker:{
     color:'#fff',
     borderColor:'#fff',
     borderBottomWidth:1,
+    fontWeight:'bold',
   },
    picker2:{
     borderColor:'#fff',

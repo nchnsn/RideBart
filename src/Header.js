@@ -6,21 +6,68 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Animated,
+  Easing,
 } from 'react-native';
 
 export default class Header extends Component {
+  constructor(props){
+    super(props);
+    this.animation1 = new Animated.Value(-300);
+  }
+
+  // componentWillMount(){
+  //   Animated.timing(
+  //     this.animation1,
+  //     {
+  //       toValue:0,
+  //       duration:300,
+  //     }
+  //   ).start();
+  // }
+
+  //   componentDidMount(){
+  //   Animated.timing(
+  //     this.animation1,
+  //     {
+  //       toValue:0,
+  //       duration:300,
+  //     }
+  //   ).start();
+  // }
+
+  //   componentDidUpdate(){
+  //   Animated.timing(
+  //     this.animation1,
+  //     {
+  //       toValue:0,
+  //       duration:300,
+  //     }
+  //   ).start();
+  // }
+
+    componentWillUpdate(){
+    Animated.timing(
+      this.animation1,
+      {
+        toValue:0,
+        duration:300,
+      }
+    ).start();
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
-          <Image source={require('./../img/back.png')} />
-         </TouchableHighlight> : <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
-          <Image source={require('./../img/menu.png')} />
-         </TouchableHighlight>}
-        <Text style={styles.welcome}>
-          <Text>{this.props.title}</Text>
-        </Text>
+          { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
+            <Image source={require('./../img/back.png')} />
+          </TouchableHighlight> : <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
+            <Image source={require('./../img/menu.png')} />
+          </TouchableHighlight>}
+          <Text style={styles.welcome}>
+            {this.props.showBack ? <Text style={styles.welcomeTitle}>{this.props.title}</Text> : <Text style={{fontSize:40}}><Text>bart</Text><Text style={styles.welcomeBart}>sign</Text></Text>}
+          </Text>
       </View>
     );
   }
@@ -33,11 +80,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#222',
-    // borderColor:'green',
-    // borderWidth:3,
+    borderColor:'#444444',
+    borderBottomWidth:1,
   },
   welcome: {
-    fontSize: 20,
     textAlign: 'center',
     margin: 10,
     color:'#fff',
@@ -45,6 +91,9 @@ const styles = StyleSheet.create({
   },
   welcomeBart:{
     color:'#add8e6',
+  },
+  welcomeTitle:{
+    fontSize:20,
   },
   instructions: {
     textAlign: 'center',
