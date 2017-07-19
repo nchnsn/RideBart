@@ -66,41 +66,16 @@ export default class Body extends Component {
     ).start(() => this.animate());
   }
 
-  // animate2 () {
-  //   this.animatedValue2.setValue(0);
-  //   Animated.timing(
-  //     this.animatedValue2,
-  //     {
-  //       toValue: 1,
-  //       duration: 500,
-  //       // easing: Easing.linear
-  //     }
-  //   ).start();
-  // }
-
-
   checkTrainArriving(element){
     if(element[1] === 'Leaving min' || element[1] === '1 min'){
       this.setState({currentTrain:element[0]});
     }
   }
 
-
   render() {
   let  animate2 = this.animatedValue2;
   let  animate3 = this.animatedValue3;
-  // const marginLeft = this.animatedValue.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [-100, 0]
-  //   });
-  // const marginLeftReverse = this.animatedValue2.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [100, 0]
-  // });
-  // const opacity = this.animatedValue.interpolate({
-  //   inputRange: [0, 0.5, 1],
-  //   outputRange: [0, 1, 0]
-  // });
+
   const movingMargin = this.animatedValue.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: [0, 300, 0]
@@ -113,12 +88,13 @@ export default class Body extends Component {
     inputRange: [0, 0.5, 1],
     outputRange: ['0deg', '180deg', '0deg']
   });
-  // const transition = this.props.back ? animate2 : animate3;
+  
     return (
 
       <Animated.View style={styles.container}>
         <Animated.View style={{ marginLeft:animate2 }}>
         <Animated.View style={{ opacity:this.animatedValue, paddingBottom:20 }}>
+          <Text>{this.props.train}</Text>
         <Text style={styles.arrivingTrain} >{this.props.train ? this.props.train[0] : ' '} </Text>
         <Text style={styles.arrivingTrainCar}>{this.props.train ? this.props.train[1] + ' CAR TRAIN' : ' '}</Text>
         </Animated.View>

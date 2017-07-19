@@ -49,6 +49,10 @@ export default class App extends Component {
             });
             })
   }
+  // componentWillUpdate(){
+  //   this.setState({currentTrain:null});
+  // }
+
 
   homeScreen(){
     this.setState({showBack:false});
@@ -66,11 +70,13 @@ export default class App extends Component {
         .then(response => response.json())
         .then( (json) => json.root)
         .then(allTrains => {
+            let updatedArrivals = false;
             this.setState({trainTimes:allTrains.station[0].etd.map((e,i)=> {
               if(e.estimate[0].minutes === 'Leaving' || e.estimate[0].minutes === '1'){
                 this.setState({currentTrain:[e.destination.toUpperCase(), e.estimate[0].length ]});
+                updatedArrivals = true;
               } else {
-                // this.setState({currentTrain:e.estimate[0].minutes});
+                updatedArrivals ? null : this.setState({currentTrain:null});
               }
               return ([e.destination, e.estimate[0] ? e.estimate[0].minutes + ' min' : 'nothing', e.estimate[1] ? e.estimate[1].minutes + ' min' : 'nothing', e.estimate[2] ? e.estimate[2].minutes + ' min' : 'nothing']);
             }
@@ -85,9 +91,10 @@ export default class App extends Component {
   }
 
   trainArriving(times){
+    // this may no longer be used...
       if(times[1] === 'Leaving min' || times[1] === '1 min'){
         this.setState({currentTrain:times[0]});
-    }
+    } 
   }
   backButton(){
     this.setState({showBack:false, showSelect:true, showBody:false, stationName:'ridebart' });
