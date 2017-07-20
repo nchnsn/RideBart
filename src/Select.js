@@ -7,8 +7,12 @@ import {
   View,
   Animated,
   Easing,
+  TouchableHighlight
+  
 
 } from 'react-native';
+
+
 
 export default class Select extends Component {
   constructor(props){
@@ -29,15 +33,17 @@ export default class Select extends Component {
     return(
       <View style={styles.container}>
         <Animated.View style={{marginLeft:this.animation1}}>
-        <View style={styles.selectWrapper}>
-          <Animated.View style={styles.select}>
-            <Text style={styles.selectText} title='Select Station' onPress={this.props.showModal}>Select Station</Text>
-          </Animated.View>
-        </View>        
-        <View style={styles.loading}>
-          {this.props.loading ? <Text style={{color:'#fff'}}>Loading...</Text> : <Text style={{color:'#fff'}}>Loaded!</Text>}
-        </View>
+          <TouchableHighlight>
+          <View style={styles.selectWrapper}>
+            <Animated.View style={styles.select}>
+              <Text style={styles.selectText} title='Select Station' onPress={this.props.showModal}>Select Station</Text>
+            </Animated.View>
+          </View>        
+          </TouchableHighlight>
         </Animated.View>
+        {/*<View style={styles.loading}>
+            {this.props.loading ? <Text style={styles.loadingText}>Loading...</Text> : <Text style={styles.loadingText}>Loaded!</Text>}
+        </View>*/}
       </View>
     );
   }
@@ -65,6 +71,18 @@ const styles = StyleSheet.create({
   },
   loading:{
     flex:1,
+    position:'absolute',
+    bottom:0,
+    backgroundColor:'yellow',
+    padding:5,
+    left:0,
+    marginLeft:0,
+    
+  },
+  loadingText:{
+    textAlign:'center',
+    color:'#fff',
+    
   },
   selectWrapper:{
     flex:1,
