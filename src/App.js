@@ -24,8 +24,9 @@ export default class App extends Component {
        loading:false,
        allStations:null,
        currentStation:'none',
-       stationName:'ridebart',
+       stationName:'',
        trainTimes:null,
+       trainTimes2:null,
        currentTrain:null,
        modal:false,
        showBack:false,
@@ -47,7 +48,7 @@ export default class App extends Component {
                 loading:false,
                 allStations:data.root.stations.station,             
             });
-            })
+            }).catch(()=>console.log('errrrror trains'))
   }
   // componentWillUpdate(){
   //   this.setState({currentTrain:null});
@@ -56,11 +57,11 @@ export default class App extends Component {
 
   homeScreen(){
     this.setState({showBack:false});
-    this.setState({showSelect:true, showBody:false, stationName:'ridebart' });
+    this.setState({showSelect:true, showBody:false });
   }
   
   selectScreen(){
-    this.setState({showBack:true, showSelect:false, showBody:true, stationName:'ridebart'});
+    this.setState({showBack:true, showSelect:false, showBody:true});
   }
 
   selectStation(station){
@@ -78,12 +79,13 @@ export default class App extends Component {
               } else {
                 updatedArrivals ? null : this.setState({currentTrain:null});
               }
-              return ([e.destination, e.estimate[0] ? e.estimate[0].minutes + ' min' : 'nothing', e.estimate[1] ? e.estimate[1].minutes + ' min' : 'nothing', e.estimate[2] ? e.estimate[2].minutes + ' min' : 'nothing']);
+              return ([e.destination, e.estimate[0] ? e.estimate[0].minutes + ' min' : '', e.estimate[1] ? e.estimate[1].minutes + ' min' : '', e.estimate[2] ? e.estimate[2].minutes + ' min' : '']);
             }
             ), stationName:allTrains.station[0].name
         });
-      });
-      // this.setState({currentTrain:'nic'});
+      })
+      .catch(()=>console.log('errrrror station'));
+      
     setTimeout(()=>{
       console.log('call back on timer');
       this.selectStation(this.state.currentStation);

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     position:'absolute',
     bottom:0,
-    left:0,
+    // left:0,
     width:width,
     backgroundColor:'#333',
     opacity:.8,

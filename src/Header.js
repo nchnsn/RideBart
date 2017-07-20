@@ -63,11 +63,13 @@ export default class Header extends Component {
           { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
             <Image source={require('./../img/back.png')} />
           </TouchableHighlight> : <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
-            <Image source={require('./../img/menu.png')} />
+            {/*<Image source={require('./../img/menu.png')} />*/}
+            <Text></Text>
           </TouchableHighlight>}
           <Text style={styles.welcome}>
-            {this.props.showBack ? <Text style={styles.welcomeTitle}>{this.props.title}</Text> : <Text style={{fontSize:40}}><Text>bart</Text><Text style={styles.welcomeBart}>sign</Text></Text>}
+            {this.props.showBack ? <Text style={styles.welcomeTitle}>{this.props.title}</Text> : <Text style={{fontSize:30}}><Text>ride</Text><Text style={styles.welcomeBart}>bart</Text></Text>}
           </Text>
+          <Text style={styles.rightNav}></Text>
       </View>
     );
   }
@@ -84,13 +86,14 @@ const styles = StyleSheet.create({
     borderBottomWidth:1,
   },
   welcome: {
+    flex:3,
     textAlign: 'center',
-    margin: 10,
+    margin: 0,
     color:'#fff',
     fontWeight:'bold',
   },
   welcomeBart:{
-    color:'#add8e6',
+    color:'#B8E2FF',
   },
   welcomeTitle:{
     fontSize:20,
@@ -101,9 +104,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   backButton:{
-    position:'absolute',
-    top:40,
-    left:15,
+    flex:1,
+    paddingLeft:10,
+    // position:'absolute',
+    // top:40,
+    // left:15,
+    
+  },
+  rightNav:{
+    flex:1,
   }
 });
 

@@ -94,7 +94,6 @@ export default class Body extends Component {
       <Animated.View style={styles.container}>
         <Animated.View style={{ marginLeft:animate2 }}>
         <Animated.View style={{ opacity:this.animatedValue, paddingBottom:20 }}>
-          <Text>{this.props.train}</Text>
         <Text style={styles.arrivingTrain} >{this.props.train ? this.props.train[0] : ' '} </Text>
         <Text style={styles.arrivingTrainCar}>{this.props.train ? this.props.train[1] + ' CAR TRAIN' : ' '}</Text>
         </Animated.View>
@@ -116,7 +115,7 @@ export default class Body extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
+    flex: 6,
     // flexDirection:'column',
     justifyContent: 'center',
     alignItems: 'center',

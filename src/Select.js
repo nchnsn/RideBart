@@ -46,7 +46,7 @@ export default class Select extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
+    flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
     
