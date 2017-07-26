@@ -60,7 +60,7 @@ export default class Header extends Component {
   render() {
     return (
       <View style={styles.container}>
-          { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
+          { this.props.showBack ? <TouchableHighlight style={styles.backButton} onPress={this.props.back} underlayColor='#222'>
             <Image source={require('./../img/back.png')} />
           </TouchableHighlight> : <TouchableHighlight style={styles.backButton} onPress={this.props.back}>
             {/*<Image source={require('./../img/menu.png')} />*/}
