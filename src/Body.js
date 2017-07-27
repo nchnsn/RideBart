@@ -45,16 +45,6 @@ export default class Body extends Component {
     ).start();
   }
 
-  // componentDidUpdate() {
-  //   Animated.timing(this.animatedValue3,            
-  //     {
-  //       toValue: 0,                   
-  //       duration: 300,             
-  //     }
-  //   ).start();
-         
-  // }
-
   animate () {
     this.animatedValue.setValue(1)
     Animated.timing(

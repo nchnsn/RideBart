@@ -10,11 +10,14 @@ import {
   Button,
   Animated,
   Dimensions,
+  Platform
 } from 'react-native';
 import Dropdown from './Dropdown';
+import DropdownAndroid from './DropdownAndroid';
 import Select from './Select';
 import Header from './Header';
 import Body from './Body';
+
 
 
 const width = Dimensions.get('window').width; //full width
@@ -53,11 +56,6 @@ export default class App extends Component {
             });
             }).catch(()=>this.setState({status:'Connection Issue - Check Network or Try Again'}));
   }
-  // componentWillUpdate(){
-  //   this.setState({currentTrain:null});
-  // }
-
-
 
   homeScreen(){
     this.setState({showBack:false});
@@ -107,14 +105,15 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.allStations);
+    let selectButton = <DropdownAndroid currentStation = {this.state.currentStation} goHome={()=>this.selectScreen()} hideSelect={()=>this.setState({showSelect:false})} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/>;
+    {Platform.OS === 'ios' ? selectButton = <Select loading={this.state.loading} hide={this.state.showSelect} showModal={()=>this.setState({modal:true})} /> : null }
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Header title={this.state.stationName} back={()=>this.homeScreen()} showBack={this.state.showBack}/>
         </View>
         <Text>{this.state.test}</Text>
-        {this.state.showSelect ? <Select loading={this.state.loading} hide={this.state.showSelect} showModal={()=>this.setState({modal:true})} /> : null}
+        {this.state.showSelect ? selectButton : null}
         {this.state.showBody ? <Body value={this.state.currentStation} times={this.state.trainTimes} train={this.state.currentTrain} stationName={this.state.stationName} back={this.state.showBack} test='this is a test'/> : null}
         {this.state.modal ? <Dropdown currentStation = {this.state.currentStation} goHome={()=>this.selectScreen()} hideSelect={()=>this.setState({showSelect:false})} allStations={this.state.allStations} closeModal={()=>this.setState({modal:false})} updateStation={(station)=>this.selectStation(station)}/> : null}
         <View style={styles.status}>{this.state.loading ? <Text>{this.state.status}</Text> : <Text>{this.state.status}</Text>}</View>

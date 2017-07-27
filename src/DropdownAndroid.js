@@ -16,7 +16,7 @@ import {
 
 const width = Dimensions.get('window').width; //full width
 const height = Dimensions.get('window').height;
-export default class Dropdown extends Component {
+export default class DropdownAndroid extends Component {
   constructor(props){
     super(props);
     this.closeAnimation = new Animated.Value(height);
@@ -56,17 +56,15 @@ export default class Dropdown extends Component {
   render() {
     console.log('rendering');
     return (
-      <Animated.View style={{ transform: [{translateY: this.closeAnimation}], position:'absolute',  bottom:0, left:0, width:width, backgroundColor:'#333', opacity:.8 }}>
-        <View style={styles.selectView}>
-          <Text style={styles.select} title='select' 
-          onPress={()=>this.closeModal()}>
-            Done</Text>
-        </View>
-        <Picker selectedValue={this.props.currentStation} itemStyle={styles.picker} onValueChange={(value)=>this.updateStation(value)}>
+      <Animated.View style={styles.android}>
+        <View>
+        <Picker selectedValue='' style={styles.pickerStyle} itemStyle={{color:'#fff'}} onValueChange={(value)=>(value !== '' ? this.updateStation(value) : null)}>
             {/*selectedValue={this.state.language}
             onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>*/}
+            <Picker.Item key='test' label='Select Station' value=''  itemStyle={styles.picker} style={styles.picker}/>
             {this.props.allStations ? this.props.allStations.map((e,i)=>{return <Picker.Item key={i} label={e.name} value={e.abbr} />}) : <Picker.Item key={1} label='Try again dude' value='Try again' /> }
         </Picker>
+        </View>
       </Animated.View>
     );
   }
@@ -93,15 +91,15 @@ const styles = StyleSheet.create({
   },
   select:{
     textAlign:'right',
-    height:30,
+    height:60,
     fontSize:20,
     fontWeight:'bold',
     padding:5,
     color:'#add8e6',
   },
   selectView:{
-    // width:375,
-    // height:40,
+    width:175,
+    height:40,
     borderTopWidth:1,
     borderBottomWidth:1,
     borderColor:'#fff',
@@ -112,12 +110,22 @@ const styles = StyleSheet.create({
     borderColor:'#fff',
     borderBottomWidth:1,
     fontWeight:'bold',
+    height:100,
   },
    picker2:{
     borderColor:'#fff',
-
+  },
+  android:{
+    flex:6,
+  },
+  pickerStyle:{
+    borderWidth:1,
+    borderColor:'#fff',
+    height:220,
+    color:'#fff',
+    width:250,
+    marginLeft:35,
     
- 
   }
 
 });

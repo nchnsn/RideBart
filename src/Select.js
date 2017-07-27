@@ -7,7 +7,8 @@ import {
   View,
   Animated,
   Easing,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
   
 
 } from 'react-native';
@@ -36,14 +37,11 @@ export default class Select extends Component {
           <TouchableHighlight>
           <View style={styles.selectWrapper}>
             <Animated.View style={styles.select}>
-              <Text style={styles.selectText} title='Select Station' onPress={this.props.showModal}>Select Station</Text>
+              <Text style={styles.selectText} title='Select Station' onPress={this.props.showModal}>Select Station</Text> 
             </Animated.View>
           </View>        
           </TouchableHighlight>
         </Animated.View>
-        {/*<View style={styles.loading}>
-            {this.props.loading ? <Text style={styles.loadingText}>Loading...</Text> : <Text style={styles.loadingText}>Loaded!</Text>}
-        </View>*/}
       </View>
     );
   }
