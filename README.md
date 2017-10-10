@@ -1,0 +1,2 @@
+# RideBart
+RideBart is a Real-time departures app for the BART (Bay Area Rapid Transit) written in react-native. RideBart uses the BART real-time departures API so that you know exactly when your train is leaving at all times. Unlike other Bay Area transit apps, RideBart uses the same iconic look, feel, and functionality of the actual Bart signs in the station, so you'll never need to rush into the station to check the train times. RideBart is your own personal 'Bart Sign' in your pocket.  
